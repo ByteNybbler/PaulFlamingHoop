@@ -1,0 +1,12 @@
+; DO NOT EDIT (unless you know what you are doing)
+;
+; This subdirectory is a git "subrepo", and this file is maintained by the
+; git-subrepo command. See https://github.com/git-commands/git-subrepo#readme
+;
+[subrepo]
+	remote = https://github.com/ByteNybbler/PAUtiLib
+	branch = master
+	commit = 16c43355320ac49cba0989d09d8f3b67867a2146
+	parent = ff352edcd18f6c545dc84e3eeda18bcc8db389f6
+	method = merge
+	cmdver = 0.4.0
