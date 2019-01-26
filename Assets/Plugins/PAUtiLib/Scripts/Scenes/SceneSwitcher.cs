@@ -1,5 +1,5 @@
 ﻿// Author(s): Paul Calande
-// Switches scenes.
+// Switches scenes using the service locator.
 
 using System.Collections;
 using System.Collections.Generic;
