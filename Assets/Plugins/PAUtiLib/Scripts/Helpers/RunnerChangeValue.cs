@@ -70,6 +70,12 @@ public class RunnerChangeValue<TValue>
         return runner.Run();
     }
 
+    public bool Run(TValue valueRunning)
+    {
+        SetValueRunning(valueRunning);
+        return Run();
+    }
+
     public bool Stop()
     {
         return runner.Stop();

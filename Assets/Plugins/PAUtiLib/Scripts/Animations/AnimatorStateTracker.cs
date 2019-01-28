@@ -2,6 +2,8 @@
 // Saves and loads the state data of an Animator.
 // This includes the state of each layer and the state of each parameter.
 
+// Might be broken right now?
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;

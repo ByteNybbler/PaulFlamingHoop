@@ -107,6 +107,13 @@ public static class UtilRandom
         return UtilMath.Sign(Bool(chanceOfPositive));
     }
 
+    // Returns a random point on the unit circle.
+    // This function exists because Random.onUnitCircle is not built-in to Unity.
+    public static Vector2 OnUnitCircle()
+    {
+        return Angle.FromRandom().GetHeadingVector();
+    }
+
     // Returns one random character from a string.
     public static char CharacterFromString(string str)
     {

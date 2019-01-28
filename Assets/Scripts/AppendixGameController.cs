@@ -72,13 +72,16 @@ public class AppendixGameController : MonoBehaviour
             Tuning.gridWidth, Tuning.gridHeight, prefabCube, true,
             gridContainer, 0.5f, cubeCallback);
 
-        // Choose a random cube and make it the Appendix.
-        AppendixCube appendix = UtilRandom.GetRandomElement(cubes);
-        appendix.MakeIntoAppendix();
-        // Clicking the appendix won't take points away.
-        appendix.Clicked -= WrongCubeClicked;
-        // Clicking the appendix will win the game.
-        appendix.Clicked += WinGame;
+        if (cubes.Count != 0)
+        {
+            // Choose a random cube and make it the Appendix.
+            AppendixCube appendix = UtilRandom.GetRandomElement(cubes);
+            appendix.MakeIntoAppendix();
+            // Clicking the appendix won't take points away.
+            appendix.Clicked -= WrongCubeClicked;
+            // Clicking the appendix will win the game.
+            appendix.Clicked += WinGame;
+        }
     }
 
     private void WrongCubeClicked()

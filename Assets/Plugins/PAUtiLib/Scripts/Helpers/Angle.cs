@@ -52,6 +52,20 @@ public class Angle : IDeepCopyable<Angle>
     {
         return new Angle(radians * Mathf.Rad2Deg);
     }
+    // Returns a random angle from the given range.
+    public static Angle FromDegreesRandom(float start = 0.0f, float end = 360.0f)
+    {
+        return Angle.FromDegrees(Random.Range(start, end));
+    }
+    public static Angle FromRadiansRandom(float start = 0.0f, float end = TWO_PI)
+    {
+        return Angle.FromRadians(Random.Range(start, end));
+    }
+    // Returns any random angle from 0 to 360 degrees.
+    public static Angle FromRandom()
+    {
+        return Angle.FromDegreesRandom();
+    }
     // Constructs an angle (in signed degrees) from the given heading vector.
     public static Angle FromHeadingVector(Vector2 heading)
     {
