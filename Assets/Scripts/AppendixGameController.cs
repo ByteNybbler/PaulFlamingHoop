@@ -5,6 +5,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System;
 
 public class AppendixGameController : MonoBehaviour
 {
@@ -34,7 +35,7 @@ public class AppendixGameController : MonoBehaviour
     int score = 1000;
 
     // The collection of all cubes in the grid.
-    List<AppendixCube> cubes = new List<AppendixCube>();
+    List<AppendixCube> cubes;
 
     void Start()
     {
@@ -64,52 +65,13 @@ public class AppendixGameController : MonoBehaviour
     // Populates the grid of cubes.
     private void PopulateGrid()
     {
-        int gridWidth = Tuning.gridWidth;
-        int gridHeight = Tuning.gridHeight;
+        // Clicking the wrong cube will take points away.
+        Action<AppendixCube> cubeCallback = (x) => x.Clicked += WrongCubeClicked;
+        // Instantiate the grid of cubes.
+        cubes = UtilInstantiate.GridOfRectTransforms(
+            Tuning.gridWidth, Tuning.gridHeight, prefabCube, true,
+            gridContainer, 0.5f, cubeCallback);
 
-        // Calculate the width and height of the cells.
-        float cellWidth = gridContainer.rect.width / gridWidth;
-        float cellHeight = gridContainer.rect.height / gridHeight;
-        Vector2 center = Vector2.zero;
-
-        // To keep the cells square-shaped, make their width and height match.
-        if (cellWidth < cellHeight)
-        {
-            cellHeight = cellWidth;
-        }
-        if (cellHeight < cellWidth)
-        {
-            cellWidth = cellHeight;
-        }
-
-        // Calculate the position of the top-left corner of the grid.
-        float cornerX = center.x - ((gridWidth - 1) * cellWidth * 0.5f);
-        float cornerY = center.y + ((gridHeight - 1) * cellHeight * 0.5f);
-
-        for (int column = 0; column < gridWidth; ++column)
-        {
-            for (int row = 0; row < gridHeight; ++row)
-            {
-                //Vector2 position = new Vector2(x * 2, y * 2);
-                Vector2 position = new Vector2(
-                    cornerX + column * cellWidth, cornerY - row * cellHeight);
-
-                // Instantiate a cube using the cube prefab.
-                GameObject cubeObj = Instantiate(prefabCube, gridContainer);
-
-                // Make each cube half the size of its grid cell to create gaps between cubes.
-                RectTransform cubeTransform = cubeObj.GetComponent<RectTransform>();
-                cubeTransform.sizeDelta = new Vector2(cellWidth, cellHeight) * 0.5f;
-                cubeTransform.localPosition = position;
-
-                // Adjust some settings on the cube.
-                AppendixCube cube = cubeObj.GetComponent<AppendixCube>();
-                // Clicking the wrong cube will take points away.
-                cube.Clicked += WrongCubeClicked;
-                // Add the cube to the list.
-                cubes.Add(cube);
-            }
-        }
         // Choose a random cube and make it the Appendix.
         AppendixCube appendix = UtilRandom.GetRandomElement(cubes);
         appendix.MakeIntoAppendix();
