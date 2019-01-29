@@ -66,7 +66,7 @@ public class Timer : ITimer
         // Timers with a very short target time may finish multiple times per
         // update step, so we need to use a while loop to account for multiple
         // timer completions per update step.
-        while (secondsPassed >= secondsTarget)
+        while (secondsPassed >= secondsTarget && IsRunning())
         {
             // Decrement the time passed to prepare for another loop of this block.
             // The result of this operation is also used to get how many seconds
@@ -76,7 +76,10 @@ public class Timer : ITimer
             // If the timer doesn't loop, just stop the timer altogether.
             if (!loop)
             {
-                Clear();
+                // Set the timer's passed seconds to its target seconds.
+                // This will make sure that the return values of certain methods remain
+                // accurate, such as the number of seconds remaining on the timer.
+                secondsPassed = secondsTarget;
                 Stop();
             }
             // Invoke the timer finished callback.
@@ -91,7 +94,7 @@ public class Timer : ITimer
     // finishing causes this timer to be run.
     public bool Run(float secondsOverflow = 0.0f)
     {
-        if (clearOnRun)
+        if (clearOnRun || secondsPassed == secondsTarget)
         {
             Clear();
         }

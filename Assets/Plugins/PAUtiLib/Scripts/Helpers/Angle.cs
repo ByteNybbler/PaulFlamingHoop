@@ -110,13 +110,15 @@ public class Angle : IDeepCopyable<Angle>
     // Returns the unsigned degree measure of the angle.
     public float GetDegreesUnsigned()
     {
-        return UtilPeriodic.MoveIntoInterval(degrees, INTERVAL_UNSIGNED_DEGREES);
+        return INTERVAL_UNSIGNED_DEGREES.Remainder(degrees);
+            //UtilPeriodic.MoveIntoInterval(degrees, INTERVAL_UNSIGNED_DEGREES);
     }
 
     // Returns the signed degree measure of the angle.
     public float GetDegreesSigned()
     {
-        return UtilPeriodic.MoveIntoInterval(degrees, INTERVAL_SIGNED_DEGREES);
+        return INTERVAL_SIGNED_DEGREES.Remainder(degrees);
+            //UtilPeriodic.MoveIntoInterval(degrees, INTERVAL_SIGNED_DEGREES);
     }
 
     // Returns the radian measure of the angle.
@@ -163,84 +165,84 @@ public class Angle : IDeepCopyable<Angle>
     // Rotates the angle by 180 degrees, effectively reversing its direction.
     public Angle Reverse()
     {
-        degrees = UtilPeriodic.Reverse(degrees, INTERVAL_UNSIGNED_DEGREES);
+        degrees = INTERVAL_UNSIGNED_DEGREES.Reverse(degrees);
         return this;
     }
 
     // Mirrors an angle across the y-axis of a circle.
     public Angle MirrorHorizontal()
     {
-        degrees = UtilPeriodic.MirrorHorizontal(degrees, INTERVAL_UNSIGNED_DEGREES);
+        degrees = INTERVAL_UNSIGNED_DEGREES.MirrorHorizontal(degrees);
         return this;
     }
 
     // Mirrors an angle across the x-axis of a circle.
     public Angle MirrorVertical()
     {
-        degrees = UtilPeriodic.MirrorVertical(degrees, INTERVAL_UNSIGNED_DEGREES);
+        degrees = INTERVAL_UNSIGNED_DEGREES.MirrorVertical(degrees);
         return this;
     }
 
     // Converts an angle to an equivalent angle within the range with the given center.
     // The range will always be 360 degrees in size.
-    public Angle MoveIntoInterval(Angle centerOfTheInterval)
+    public Angle Remainder(Angle centerOfTheInterval)
     {
         IntervalFloat interval = IntervalFloat.FromCenterRadius(
             centerOfTheInterval.GetDegrees(), 180.0f);
-        degrees = UtilPeriodic.MoveIntoInterval(degrees, interval);
+        degrees = interval.Remainder(degrees);
         return this;
     }
 
     // Converts an angle to an equivalent angle within the [-180, 180) range.
-    public Angle MoveIntoSignedInterval()
+    public Angle RemainderSigned()
     {
-        degrees = UtilPeriodic.MoveIntoInterval(degrees, INTERVAL_SIGNED_DEGREES);
+        degrees = INTERVAL_SIGNED_DEGREES.Remainder(degrees);
         return this;
     }
 
     // Converts an angle to an equivalent angle within the [0, 360) range.
-    public Angle MoveIntoUnsignedInterval()
+    public Angle RemainderUnsigned()
     {
-        degrees = UtilPeriodic.MoveIntoInterval(degrees, INTERVAL_UNSIGNED_DEGREES);
+        degrees = INTERVAL_UNSIGNED_DEGREES.Remainder(degrees);
         return this;
     }
 
     // Returns the smaller distance between the two angles.
     public static Angle GetSmallerDistance(Angle angle1, Angle angle2)
     {
-        return Angle.FromDegrees(UtilPeriodic.GetSmallerDistance(
-            angle1.GetDegrees(), angle2.GetDegrees(), INTERVAL_UNSIGNED_DEGREES));
+        return Angle.FromDegrees(INTERVAL_UNSIGNED_DEGREES.GetSmallerDistance(
+            angle1.GetDegrees(), angle2.GetDegrees()));
     }
 
     // Returns the larger distance between the two angles.
     public static Angle GetLargerDistance(Angle angle1, Angle angle2)
     {
-        return Angle.FromDegrees(UtilPeriodic.GetLargerDistance(
-            angle1.GetDegrees(), angle2.GetDegrees(), INTERVAL_UNSIGNED_DEGREES));
+        return Angle.FromDegrees(INTERVAL_UNSIGNED_DEGREES.GetLargerDistance(
+            angle1.GetDegrees(), angle2.GetDegrees()));
     }
 
     // Returns true if the shortest path between the two given angles is a
     // positive (counterclockwise on the unit circle) rotation from the start angle.
     public static bool IsShortestRotationPositive(Angle start, Angle end)
     {
-        return UtilPeriodic.IsShortestRotationPositive(
-            start.GetDegrees(), end.GetDegrees(), INTERVAL_UNSIGNED_DEGREES);
+        return INTERVAL_UNSIGNED_DEGREES.IsShortestRotationPositive(
+            start.GetDegrees(), end.GetDegrees());
     }
 
     // Like the approach float function, but rotates current along the shortest path
     // to the target, like an angle moving along a circle towards a different angle.
     public Angle Approach(Angle target, Angle stepSize)
     {
-        degrees = UtilPeriodic.Approach(degrees, target.GetDegrees(),
-            stepSize.GetDegrees(), INTERVAL_UNSIGNED_DEGREES);
+        degrees = INTERVAL_UNSIGNED_DEGREES.Approach(degrees, target.GetDegrees(),
+            stepSize.GetDegrees());
         return this;
     }
 
     // Returns the sign of the shortest rotation between the two angles.
     public static int SignShortestRotation(Angle start, Angle end)
     {
-        return UtilPeriodic.SignShortestRotation(
-            start.GetDegrees(), end.GetDegrees(), INTERVAL_UNSIGNED_DEGREES);
+        return INTERVAL_UNSIGNED_DEGREES.SignShortestRotation(
+            start.GetDegrees(), end.GetDegrees());
     }
 
     // The multiplication operator scales the angle.

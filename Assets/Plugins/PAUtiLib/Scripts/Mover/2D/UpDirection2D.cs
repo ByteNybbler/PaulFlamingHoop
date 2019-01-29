@@ -30,8 +30,7 @@ public class UpDirection2D : MonoBehaviour
 
     private void NormalizeAngle()
     {
-        //upAngle = UtilCircle.AngleDegreesToUnsignedRange(upAngle);
-        upAngle.MoveIntoUnsignedInterval();
+        upAngle.RemainderUnsigned();
     }
 
     // Changes the angle corresponding to the upwards direction.

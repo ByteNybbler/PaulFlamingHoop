@@ -62,9 +62,12 @@ public static class UtilInstantiate
 
                 // Run the callback on the designated cell component.
                 T cellComponent = cellObj.GetComponent<T>();
-                callback(cellComponent);
+                if (callback != null)
+                {
+                    callback(cellComponent);
+                }
 
-                // Add the cell's component to the list.
+                // Add the cell's component to the List.
                 result.Add(cellComponent);
             }
         }

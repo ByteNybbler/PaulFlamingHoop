@@ -68,7 +68,7 @@ public class AppendixGameController : MonoBehaviour
         // Clicking the wrong cube will take points away.
         Action<AppendixCube> cubeCallback = (x) => x.Clicked += WrongCubeClicked;
         // Instantiate the grid of cubes.
-        cubes = UtilInstantiate.GridOfRectTransforms(
+        cubes = UtilInstantiate.GridOfRectTransforms<AppendixCube>(
             Tuning.gridWidth, Tuning.gridHeight, prefabCube, true,
             gridContainer, 0.5f, cubeCallback);
 
@@ -93,7 +93,7 @@ public class AppendixGameController : MonoBehaviour
     private void SummarizeGame(bool victory, int score)
     {
         // Disable the timer text.
-        textTimer.gameObject.SetActive(false);
+        //textTimer.gameObject.SetActive(false);
         // Notify all of the cubes that the game is over.
         // This will disable their functionality.
         foreach (AppendixCube cube in cubes)
